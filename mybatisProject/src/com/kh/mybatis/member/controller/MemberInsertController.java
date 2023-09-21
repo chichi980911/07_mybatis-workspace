@@ -29,30 +29,34 @@ public class MemberInsertController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//post 방식 인코딩
-		request.setCharacterEncoding("UTF-8");
 		
-		String userId= request.getParameter("userId");
-		String userPwd= request.getParameter("userPwd");
-		String userName= request.getParameter("userName");
+		// post방식으로 servlet을 호출했기때문에 인코딩 필요
+		request.setCharacterEncoding("utf-8");
+		
+		String userId = request.getParameter("userId");
+		String userPwd = request.getParameter("userPwd");
+		String userName = request.getParameter("userName");
 		String email = request.getParameter("email");
-		String birthday= request.getParameter("birthday");
-		String gender= request.getParameter("gender");
-		String phone= request.getParameter("phone");
-		String address= request.getParameter("address");
+		String birthday = request.getParameter("birthday");
+		String gender = request.getParameter("gender");
+		String phone = request.getParameter("phone");
+		String address = request.getParameter("address");
 		
-		Member m = new Member(userId, userPwd , userName, email, birthday, gender, phone, address);
-				
+		Member m = new Member(userId, userPwd, userName, email, birthday, gender, phone, address);
+		
 		int result = new MemberServiceImpl().insertMember(m);
 		
-		if(result>0) {//성공=>메인페이지
+		if(result > 0) { // 성공 => 메인페이지
+			
 			response.sendRedirect(request.getContextPath());
-		}else {//실패=>에러페이지}
-			request.setAttribute("errorMsg","회원가입실패!");
+			
+		}else { // 실패 => 에러페이지(에러문구 담아서)
+			
+			request.setAttribute("errorMsg", "회원가입에 실패하였습니다.");
 			request.getRequestDispatcher("WEB-INF/views/common/errorPage.jsp").forward(request, response);
+			
 		}
-		
-
+				
 	}
 
 	/**

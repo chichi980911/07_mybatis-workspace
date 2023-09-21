@@ -1,55 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE configuration
   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
-  "https://mybatis.org/dtd/mybatis-3-config.dtd">
-  <!-- dtd 유효성 검증 -->
-
+  "https://mybatis.org/dtd/mybatis-3-config.dtd"> <!-- 위의 세줄은 유효성판단 코드 -->
 <configuration>
-<!-- setting : mybatis 구동시 선언할 설정들을 작성하는 영역 -->
+
+	<!-- setting : mybatis 구동시 선언할 설정들을 작성하는 영역 -->
 	<settings>
-		<!-- 만약 null로 데이터 전달되었다면 빈칸이 아닌 null로 인식해라 라는 뜻(무조건 대문자 NULL로 해야한다) -->
+		<!-- 만약에 null로 데이터 전달되면 빈칸이 아닌 null로 인식해라 라는 뜻 (무조건 value는 대문자 NULL로 해야됨!) -->
 		<setting name="jdbcTypeForNull" value="NULL"/>
 	</settings>
 	
 	<!-- typeAliases : VO/DTO 클래스들의 풀클래스명을 단순한 클래스명으로 사용하기 위해서 별칭을 등록할 수 있는 영역 -->
 	<typeAliases>
-	<typeAlias type="com.kh.mybatis.member.model.vo.Member" alias="Member"/>
-	<typeAlias type="com.kh.mybatis.board.model.vo.Board" alias="Board"/>	
+		<typeAlias type="com.kh.mybatis.member.model.vo.Member" alias="Member"/>
+		<typeAlias type="com.kh.mybatis.board.model.vo.Board" alias="Board"/>
+		<typeAlias type="com.kh.mybatis.board.model.vo.Reply" alias="Reply"/>
 	</typeAliases>
 	
-	<!-- environment : mybatis에서 연동할 DB 정보들을 등록하는 영역  -->
-	<environments default="">
-		<environment id="">
+	<!-- environment : mybatis에서 연동할 DB 정보들을 등록하는 영역 -->
+	<environments default="development"> <!-- environments는 많은 environment를 가질 수 있는데 그 중 default값을 정해줘야됨 -->
+		<environment id="development">
+		
 		<!-- 
-			*transactionManager는 JDBC와 MANAGED 둘 중 하나를 선택할 수 있음 
-			-JDBC	 : 트랜젝션을 내가 직접 관리하겠다. (수동 commit)
-			-MANAGED : 트랜젝션에 대해서 어떠한 영향도 행상하지 않겠다. (자동 commit)
+			* transactionManager는 JDBC와 MANAGED 둘 중 하나를 선택할 수 있음
+			- JDBC		: 트랜젝션을 내가 직접 관리하겠다. (수동 commit) 이때까지 우리가 한 방식이 이거임 
+			- MANAGED	: 트랜젝션에 대해서 어떠한 영향도 행사하지 않겠다. (자동 commit)
 		 -->
-		 <transactionManager type="JDBC"/>
-		 
-		 <!-- 
-		 	*dataSource는 POOLED, UNPOOLED 둘 중 하나를 선택할 수 있음(ConnectionPool 사용여부)
-		 		>>ConnectionPool : Connection 객체를 담아둘 수 있는 영역
-					한번 생성된 Connection 객체를 담아두면 재사용해서 쓸 수 있음
-				-POOLED: 사용하겠다
-				-UNPOOLED: 사용하지 않겠다.
-		  -->
-		 <dataSource type="POOLED">
-		 	<property name="driver" value="oracle.jdbc.driver.OracleDriver"/>
-		 	<property name="url" value="jdbc:oracle:thin:@Localhost:1521:xe"/>
-			<property name="username" value="mybatis"/>
-			<property name="password" value="mybatis"/>	 
-		 </dataSource>
+			<transactionManager type="JDBC"/>
+			
+			<!-- 
+				* dataSource는 POOLED, UNPOOLED 둘 중 하나를 선택할 수 있음 (ConnectionPool 사용여부)
+				
+					>> ConnectionPool : Connection 객체를 담아둘 수 있는 영역
+						한번 생성된 Connection 객체를 담아두면 재사용해서 쓸 수 있음
+						
+					- POOLED : ConnectionPool을 사용하겠다. => 사용할때 꺼내고 안 쓸때 담아두는거라 속도가 좀 더 빠름
+					- UNPOOLED : 사용하지않겠다.
+					
+			 -->
+			 
+			<dataSource type="POOLED">
+				<property name="driver" value="oracle.jdbc.driver.OracleDriver"/>
+				<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"/>
+				<property name="username" value="mybatis"/>
+				<property name="password" value="mybatis"/>
+			</dataSource>
+			
 		</environment>
 	</environments>
-	
-	<!-- * mapper:실행할 sql문들을 기록 해둔 mapper 파일들을 등록하는 영역 -->
-	
-	<mappers>
-		<mapper resource="/mappers/Member-mapper.xml"/>
-		<mapper resource="/mappers/Board-mapper.xml"/>
 		
+	<!-- * mapper : 실행할 sql문들을 기록해둔 mapper 파일들을 등록하는 영역 -->
+	<mappers>
+		<mapper resource="/mappers/member-mapper.xml" />
+		<!-- '/' : 모든 소스폴더의 최상위 경로(resources 또는 src) -->
+		<!-- resources 폴더가 그냥 폴더가 아닌 소스폴더로 만든 이유 -->
+		
+		<mapper resource="/mappers/board-mapper.xml"/>
 	</mappers>
-	
+		
+		
+		
 	
 </configuration>

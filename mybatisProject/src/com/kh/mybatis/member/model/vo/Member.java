@@ -3,20 +3,21 @@ package com.kh.mybatis.member.model.vo;
 import java.sql.Date;
 
 public class Member {
-	 private int userNo;
-	 private String userId;
-	 private String userPwd;
-	 private String userName;
-	 private String email;
-	 private String birthday;
-	 private String gender;
-	 private String phone;
-	 private String address;
-	 private Date enrollDate;
-	 private Date modifyDate;
-	 private String status;
 
-	 public Member() {}
+	private int userNo;
+	private String userId;
+	private String userPwd;
+	private String userName;
+	private String email;
+	private String birthday;
+	private String gender;
+	private String phone;
+	private String address;
+	private Date enrollDate;
+	private Date modifyDate;
+	private String status;
+	
+	public Member() {}
 
 	public Member(int userNo, String userId, String userPwd, String userName, String email, String birthday,
 			String gender, String phone, String address, Date enrollDate, Date modifyDate, String status) {
@@ -134,7 +135,7 @@ public class Member {
 		return modifyDate;
 	}
 
-	public void setModifyDate(Date modifyDate) {
+	public void setModifydate(Date modifyDate) {
 		this.modifyDate = modifyDate;
 	}
 
@@ -150,9 +151,9 @@ public class Member {
 	public String toString() {
 		return "Member [userNo=" + userNo + ", userId=" + userId + ", userPwd=" + userPwd + ", userName=" + userName
 				+ ", email=" + email + ", birthday=" + birthday + ", gender=" + gender + ", phone=" + phone
-				+ ", address=" + address + ", enrollDate=" + enrollDate + ", modifyDate=" + modifyDate + ", status="
+				+ ", address=" + address + ", enrollDate=" + enrollDate + ", modifydate=" + modifyDate + ", status="
 				+ status + "]";
 	}
-	 
-	 
+	
+	
 }

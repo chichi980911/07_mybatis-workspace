@@ -30,26 +30,25 @@ public class LoginController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String userId = request.getParameter("userId");
-		String userPwd = request.getParameter("userPwd");
-		
+//		String userId = request.getParameter("userId");
+//		String userPwd = request.getParameter("userPwd");
+//		
 		Member m = new Member();
+//		m.setUserId(userId);
+//		m.setUserPwd(userPwd);
 		
-//		m.setUserId(request.getParameter("userId"));
-		m.setUserId(userId);
-		m.setUserPwd(userPwd);
-		
+		m.setUserId(request.getParameter("userId"));
+		m.setUserPwd(request.getParameter("userPwd"));
+				
 		Member loginMember = new MemberServiceImpl().loginMember(m);
 		
-		if(loginMember ==null) {
-			//로그인 실패 
-			request.setAttribute("errorMsg", "로그인실패");
+		if(loginMember == null) { // 로그인 실패
+			request.setAttribute("errorMsg", "로그인 실패!");
 			request.getRequestDispatcher("WEB-INF/views/common/errorPage.jsp").forward(request, response);
-		}else{//로그인 성공
+		}else { // 로그인 성공
 			request.getSession().setAttribute("loginMember", loginMember);
 			response.sendRedirect(request.getContextPath());
 		}
-		
 		
 	}
 

@@ -6,66 +6,65 @@ import com.kh.mybatis.common.template.Template;
 import com.kh.mybatis.member.model.dao.MemberDao;
 import com.kh.mybatis.member.model.vo.Member;
 
-public class MemberServiceImpl implements MemberService {
+public class MemberServiceImpl implements MemberService { /* MemberService를 구현한 Class */
 	
 	private MemberDao mDao = new MemberDao();
 
 	@Override
 	public int insertMember(Member m) {
+		
 		/*
-		 * connection conn =jdbctemplate.getconnection();
-		 * int result = new MemberDao().insertMEMBER(conn,m)
+		 * 이전 방식
+		 * Connection conn = JDBCTemplate.getConnection();
+		 * int result = new MemberDao().insertMember(conn, m);
 		 * 
-		 * 
-		 * if (result>0){
-		 * 		jdbcTemplate.commit(conn);
+		 * if(result > 0){
+		 * 		JDBCTemplate.commit(conn);
 		 * }else{
-		 * 	jdbcTemplate.rollback(conn);
-		 * }
+		 * 		JDBCTemplate.rollback(conn);
+		 * } 
 		 * 
-		 * jdbctemplate.close(conn)
-		 * return result
-		 * */
+		 * JDBCTemplate.close(conn);
+		 * 
+		 * return result;
+		 * 
+		 */
 		
 		SqlSession sqlSession = Template.getSqlSession();
-		//이때 mybatis-config.xml 문서 읽어들임
-		//등록시킨 mapper.xml 문서들도 다 읽어들여짐
 		
-		int result = mDao.insertMember(sqlSession,m);
+		int result = mDao.insertMember(sqlSession, m);
 		
-		if(result>0){
+		// commit을 수동으로 설정해서 else필요없음
+		if(result > 0) {
 			sqlSession.commit();
 		}
+		
 		sqlSession.close();
 		
 		return result;
-	
 	}
 
 	@Override
 	public Member loginMember(Member m) {
 		
-		SqlSession sqlsession = Template.getSqlSession();
+		SqlSession sqlSession = Template.getSqlSession();
+		Member loginMember = mDao.loginMember(sqlSession, m);
 		
-		Member loginMember = mDao.loginMember(sqlsession,m);
+		sqlSession.close();
 		
-		sqlsession.close();
 		return loginMember;
-		
-		
 	}
 
 	@Override
 	public int updateMember(Member m) {
-		
 		return 0;
 	}
 
 	@Override
 	public int deleteMember(String userId) {
-		
 		return 0;
-	}
+	} 
+	
 	
 
 }
