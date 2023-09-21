@@ -17,7 +17,7 @@ public interface BoardService {
 	 * public int increase count(int boardNOo){}
 	 * */
 	
-	int selectListcount();
+	int selectListCount();
 	
 	ArrayList<Board> selectList(PageInfo pi);
 	
