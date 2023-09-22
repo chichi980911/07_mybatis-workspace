@@ -79,7 +79,10 @@ public class BoardDao {
 		
 		RowBounds rowBounds = new RowBounds(offset,limit);
 		return (ArrayList)sqlSession.selectList("boardMapper.selectSearchList", map, rowBounds);
+	}
+	
+	public int deleteBoard(SqlSession sqlSession,int boardNo) {
 		
-		 
+		return sqlSession.update("boardMapper.deleteBoard",boardNo);
 	}
 }

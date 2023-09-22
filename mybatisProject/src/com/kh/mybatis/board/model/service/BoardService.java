@@ -27,4 +27,6 @@ public interface BoardService {
 
 	ArrayList<Board> selectSearchList(HashMap<String, String> map,PageInfo pi);
 	
+	int deleteBoard(int boardNo);
+	
 }

@@ -63,7 +63,16 @@
 	            </tr>
             </c:forEach>
         </table>
-
+        <div align="center">
+        <button onclick="boarddelete()">삭제하기</button>
+        </div>
     </div>
+
+    
+		 <script>
+            function boarddelete(){
+                location.href='deleteboard.bo?bno=${b.boardNo}'
+            }
+		</script>
 </body>
 </html>
