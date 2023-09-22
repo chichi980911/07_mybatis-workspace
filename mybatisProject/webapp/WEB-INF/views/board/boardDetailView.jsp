@@ -63,9 +63,11 @@
 	            </tr>
             </c:forEach>
         </table>
+        <c:if test="${loginMember != null &&  b.boardWriter eq loginMember.userId}">
         <div align="center">
         <button onclick="boarddelete()">삭제하기</button>
         </div>
+        </c:if>
     </div>
 
     
